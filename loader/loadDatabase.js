@@ -20,7 +20,6 @@ module.exports = {
             }
             if(args.isBan != null && member.isBan != args.isBan){toPush = false}
             if(args.isExcluded != null && member.isExcluded != args.isExcluded){toPush = false}
-            if(args.startTime != null && member.startTime != args.startTime){toPush = false}
         
             if (toPush) {
                 finalData.push(member)

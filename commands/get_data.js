@@ -11,6 +11,12 @@ module.exports = {
     dm : false,
     options : [
         {
+            type : commands.type.bool,
+            name : "public",
+            description : "if true, everyone will be able to see the data",
+            required : true
+        },
+        {
             type : commands.type.discord.role,
             name : "has_role",
             description : "if not null, will only return the rows with the selected role",
@@ -39,18 +45,6 @@ module.exports = {
             name : "is_excluded",
             description : "if not true, will filter the rows to only return the rows corresponding to a member who is excluded",
             required : false
-        },
-        {
-            type : commands.type.string,
-            name : "punishement_start_time",
-            description : "please specify the date/time like that : 01/01/2000 00:00:00",
-            required : false
-        },
-        {
-            type : commands.type.bool,
-            name : "public",
-            description : "if true, everyone will be able to see the data",
-            required : true
         }
     ],
 
@@ -63,11 +57,10 @@ module.exports = {
             role : interaction.getRole("has_role") == null ? null : interaction.getRole("has_role").id,
             isBan : interaction.getBoolean("is_banned"),
             isExluded : interaction.getBoolean("is_excluded"),
-            startTime : interaction.getString("punishement_start_time")
         }
 
         let errors = await DB.Get(args)
-        msg.reply({content : errors == null ? "This file contain the data asked" : "UhOh, an error as occured. Please contact an admin and show the file below", ephemeral : interaction.getBoolean("public"), files: [{
+        msg.reply({content : errors == null ? "This file contain the data asked" : "UhOh, an error as occured. Please contact an admin and show the file below", ephemeral : !interaction.getBoolean("public"), files: [{
             attachment: 'temp.json',
             name: errors == null ? 'data.json' : 'errors.json',
             description: errors == null ? 'the data in the DataBase' : 'the error that has occured'
