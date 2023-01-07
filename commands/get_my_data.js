@@ -11,23 +11,21 @@ module.exports = {
     dm : true,
     
     async run(bot, msg, interaction){
-        args = {
+        let args = {
             from : msg.member.guild.name,
             select : "*",
-            eq : [
-                ["id", msg.user.username + "#" + msg.user.discriminator],
-                [],
-                [],
-                [],
-                [],
-                []
-            ]
+            id : msg.user.username + "#" + msg.user.discriminator,
+            warns : null,
+            role : null,
+            isBan : null,
+            isExcluded : null,
+            startTime : null
         }
-        await DB.Get(args)
-        msg.reply({content : "This file contain your current data.", ephemeral : true, files: [{
+        let errors = await DB.Get(args)
+        msg.reply({content : errors == null ? "This file contain the data asked" : "UhOh, an error as occured. Please contact an admin and show the file below", ephemeral : true, files: [{
             attachment: 'temp.json',
-            name: 'data.json',
-            description: 'your data in the DataBase'
-          }]})
+            name: errors == null ? 'data.json' : 'errors.json',
+            description: errors == null ? 'the data in the DataBase' : 'the error that has occured'
+        }]})
     }
 }
