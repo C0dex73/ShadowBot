@@ -5,7 +5,16 @@ const supabase = createClient(data.supabase.url, data.supabase.APIKey)
 
 module.exports = {
     async Get(args){
-        let {data, error} =  await supabase.from(args.from).select(args.select).eq(args.eq == null ? null : args.eq[0], args.eq == null ? null : args.eq[1])
+        let {data, error} =  await supabase
+                                    .from(args.from)
+                                    .select(args.select)
+                                    .eq(args.eq[0][1] == null ? null : args.eq[0][0], args.eq[0][1] == null ? null : args.eq[0][1])
+                                    .eq(args.eq[1][1] == null ? null : args.eq[1][0], args.eq[1][1] == null ? null : args.eq[1][1])
+                                    .eq(args.eq[2][1] == null ? null : args.eq[2][0], args.eq[2][1] == null ? null : args.eq[2][1])
+                                    .eq(args.eq[3][1] == null ? null : args.eq[3][0], args.eq[3][1] == null ? null : args.eq[3][1])
+                                    .eq(args.eq[4][1] == null ? null : args.eq[4][0], args.eq[4][1] == null ? null : args.eq[4][1])
+                                    .eq(args.eq[5][1] == null ? null : args.eq[5][0], args.eq[5][1] == null ? null : args.eq[5][1])
+
         if(error != null){
             return "ERROR : " + error
         }

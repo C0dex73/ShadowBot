@@ -15,8 +15,12 @@ module.exports = {
             from : msg.member.guild.name,
             select : "*",
             eq : [
-                "id",
-                msg.user.username + "#" + msg.user.discriminator
+                ["id", msg.user.username + "#" + msg.user.discriminator],
+                [],
+                [],
+                [],
+                [],
+                []
             ]
         }
         await DB.Get(args)

@@ -8,7 +8,7 @@ module.exports = {
     name: "get_data",
     description : "Return all the Database data",
     permission : Discord.PermissionsBitField.All,
-    dm : true,
+    dm : false,
     options : [
         {
             type : commands.type.discord.role,
@@ -24,42 +24,55 @@ module.exports = {
         },
         {
             type : commands.type.int,
-            name : "has_warns",
+            name : "warns",
             description : "if not null, will only return the rows with the selected number of warns",
             required : false
         },
         {
             type : commands.type.bool,
-            name : "is_ban",
+            name : "is_banned",
             description : "if not true, will only return the rows corresponding to a member who is ban",
             required : false
         },
         {
             type : commands.type.bool,
             name : "is_excluded",
-            description : "if not true, will filter the data to only return the rows corresponding to a member who is excluded",
+            description : "if not true, will filter the rows to only return the rows corresponding to a member who is excluded",
             required : false
-        } //TODO : write commands relatively to the options
+        },
+        {
+            type : commands.type.int,
+            name : "punishement_start_time",
+            description : "if not true, will only return the rows of who have a punishement startTime of the indicated value",
+            required : false
+        }
     ],
 
     async run(bot, msg, interaction){
-        console.log(interaction.getRole("has_role"))
-        console.log(interaction.getMember("is"))
-        console.log(interaction.getInt())
         args = {
             from : msg.member.guild.name,
             select : "*",
             eq : [
-                "id",
-                msg.user.username + "#" + msg.user.discriminator
+                ["id", interaction.getMember("is")],
+                ["warns", interaction.getInteger("warns")],
+                ["roles", interaction.getMember("roles") == null ? null : interaction.getMember("roles").id],
+                ["isBan", interaction.getBoolean("is_banned")],
+                ["isExcluded", interaction.getBoolean("is_excluded")],
+                ["startTime", interaction.getInteger("punishement_start_time")]
             ]
         }
-        
-        await DB.Get(args)
-        msg.reply({content : "This file contain your current data.", ephemeral : true, files: [{
-            attachment: 'temp.json',
-            name: 'data.json',
-            description: 'your data in the DataBase'
-          }]})
+        console.log("e")
+        errors = await DB.Get(args).
+        console.log(errors)
+        if(errors =! null){
+            msg.reply({content : "This file contain the data asked", ephemeral : true, files: [{
+                attachment: 'temp.json',
+                name: 'data.json',
+                description: 'the data in the DataBase'
+            }]})
+        }
+        else{
+            msg.reply({content : "OhOh, ERROR : " + errors, ephemeral : true})
+        }
     }
 }
