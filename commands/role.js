@@ -21,13 +21,7 @@ module.exports = {
     }],
 
     async run(bot, msg, args){
-        try{
-            const role = args.getRole('role')
-            const member = args.getMember('membre')
-            member.roles.add(role)
-            msg.reply({content : `Successfuly gave '${role.name}' to '${member.user.username}'`, ephemeral : true})
-        }catch(err){
-            await msg.reply({content : "ERROR : " + toString(err).slice(toString(err).indexOf(":") + 2), ephemeral: true})
-        }
+        args.getMember('membre').roles.add(args.getRole('role'))
+        msg.reply({content : `Successfuly gave '${role.name}' to '${member.user.username}'`, ephemeral : true})
     }
 }

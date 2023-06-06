@@ -7,7 +7,7 @@ const fs = require("fs")
 module.exports = {
     name: "get_data",
     description : "Return all the Database data",
-    permission : Discord.PermissionsBitField.All,
+    permission : Discord.PermissionFlagsBits.BanMembers,
     dm : false,
     options : [
         {

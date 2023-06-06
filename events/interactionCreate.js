@@ -1,7 +1,7 @@
 const Discord = require("discord.js")
 
 module.exports = async (bot, interaction) =>{
-    if(interaction.guild != null && interaction.member.permissions.has(Discord.PermissionsBitField.All)){
+    if(interaction.guild != null && interaction.member.permissions.has(Discord.PermissionFlagsBits.Administrator)){
         //console.log("admin used command !")
     }
     if(interaction.type === Discord.InteractionType.ApplicationCommandAutocomplete){
@@ -11,6 +11,10 @@ module.exports = async (bot, interaction) =>{
     }
     if(interaction.type === Discord.InteractionType.ApplicationCommand){
         let command = require(`../commands/${interaction.commandName}`)
-        command.run(bot, interaction, interaction.options)
+        try{
+            command.run(bot, interaction, interaction.options)
+        }catch(err){
+            interaction.reply({content : err, ephemeral : true})
+        }
     }
 }
