@@ -45,21 +45,25 @@ module.exports = {
     },
 
     async AddRow(user, guild){
-        let {data, error} = await supabase.from(guild.name).insert([{id : user.username + "#" + user.discriminator}])
+        let {data, error} = await supabase.from(guild.name).insert([{id : user.username + "#" + user.id}])
+    },
+
+    async RemoveRow(user, guild){
+        let {error2} = await supabase.from(bot.guilds.cache.get(guildId).name).delete().match({id : user.username + '#' + user.id})
     },
 
     async Update(bot){
         data.guild.forEach(async (guildId) => {
             bot.guilds.cache.get(guildId).members.fetch().then(members => {members.forEach(async member => {
                 let user = await member.user
-                let {data, error} = await supabase.from(bot.guilds.cache.get(guildId).name).select('*').eq('id', user.username + '#' + user.discriminator)
+                let {data, error} = await supabase.from(bot.guilds.cache.get(guildId).name).select('*').eq('id', user.username + '#' + user.id)
                 if (JSON.stringify(data) == "[]") {
                     this.AddRow(user, bot.guilds.cache.get(guildId))
                 }
-                let {data2, error2} = await supabase.from(bot.guilds.cache.get(guildId).name).update({roles : JSON.stringify(member._roles)}).match({id : user.username + '#' + user.discriminator})
-                if (error2 != null || error != null){
-                    console.error(error, error2)
+                if(JSON.stringify(member._roles) == "[]"){
+                    member.roles.add(bot.guilds.cache.get(guildId).roles.cache.find(r => r.name === "may-a-bot"))
                 }
+                let {error2} = await supabase.from(bot.guilds.cache.get(guildId).name).update({roles : JSON.stringify(member._roles)}).match({id : user.username + '#' + user.id})
             })})
         })
     }

@@ -10,13 +10,13 @@ module.exports = {
     permissions : null,
     dm : true,
 
-    run(bot, msg, interaction) {
+    run(bot, msg, interactionParams) {
         config.guild.forEach((guild) => {
             let guildName = bot.guilds.cache.get(guild).name
             args = {
                 from : guildName,
                 select : "*",
-                id : msg.user.username + "#" + msg.user.discriminator,
+                id : msg.user.username + "#" + msg.user.id,
                 warns : null,
                 role : null,
                 isBan : null,
@@ -24,22 +24,24 @@ module.exports = {
             }
             DB.Get(args)
             fs.readFile('temp.json', (err, data) => {
-                console.log(guildName + data.toString())
-                if(data.toString() == "[]") {
-                    DB.Update(bot)
-                    config.guild.forEach((guildId) => {
-                        try{
-                            bot.guilds.cache.get(guildId).members.fetch(msg.user.id).then(user => {
+                DB.Update(bot)
+                config.guild.forEach((guildId) => {
+                    try{
+                        bot.guilds.cache.get(guildId).members.fetch(msg.user.id).then(user => {
+                            if(user.roles.cache.some(role => role.name == "may-a-bot")){
                                 user.roles.remove(bot.guilds.cache.get(guildId).roles.cache.find(r => r.name === "may-a-bot"))
                                 user.roles.add(bot.guilds.cache.get(guildId).roles.cache.find(r => r.name === "not-a-bot"))
-                            })
-                        }catch{
-                            console.log(bot.guilds.cache.get(guildId).name)
-                        }
-                    })
+                                return msg.reply("you are now verified on " + guildName + " !")
+                            }else{
+                                return msg.reply({content : "you are already verified on " + guildName + " !", ephemeral : true})
+                            }
 
-                    return msg.reply("you are now verified on " + guildName + " !")
-                }
+                            
+                        })
+                    }catch(err){
+                        return msg.reply({content : "oops, something went wrong : " + err.message, ephemeral : true})
+                    }
+                })
             })
         })
     }

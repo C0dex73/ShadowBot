@@ -52,7 +52,7 @@ module.exports = {
         let args = {
             from : msg.member.guild.name,
             select : "*",
-            id : interaction.getMember("is") == null ? null : interaction.getMember("is").user.username + "#" + interaction.getMember("is").user.discriminator,
+            id : interaction.getMember("is") == null ? null : interaction.getMember("is").user.username + "#" + interaction.getMember("is").user.id,
             warns : interaction.getInteger("warns"),
             role : interaction.getRole("has_role") == null ? null : interaction.getRole("has_role").id,
             isBan : interaction.getBoolean("is_banned"),

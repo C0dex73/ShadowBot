@@ -14,7 +14,7 @@ module.exports = {
         let args = {
             from : msg.member.guild.name,
             select : "*",
-            id : msg.user.username + "#" + msg.user.discriminator,
+            id : msg.user.username + "#" + msg.user.id,
             warns : null,
             role : null,
             isBan : null,
