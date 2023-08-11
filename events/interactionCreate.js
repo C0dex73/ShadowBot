@@ -12,6 +12,11 @@ module.exports = async (bot, interaction) =>{
     if(interaction.type === Discord.InteractionType.ApplicationCommand){
         let command = require(`../commands/${interaction.commandName}`)
         try{
+            console.log("[" + (new Date(Date.now())).toLocaleString() + " UTC] : " + interaction.member.user.username + " --> " + interaction.commandName)
+        }catch(err){
+            console.log(err)
+        }
+        try{            
             command.run(bot, interaction, interaction.options)
         }catch(err){
             interaction.reply({content : err, ephemeral : true})
