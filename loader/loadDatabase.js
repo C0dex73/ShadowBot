@@ -29,7 +29,7 @@ module.exports = {
         fs.writeFile("./temp.json", JSON.stringify(finalData, null, 4).normalize("NFD").replace(/[\u0300-\u036f]/g, ""), (err) => {
             if (err) console.log(err)
         })
-        return error
+        return [finalData, error]
     },
 
     async TestConnexion(bot){
@@ -66,5 +66,10 @@ module.exports = {
                 let {error2} = await supabase.from(bot.guilds.cache.get(guildId).name).update({roles : JSON.stringify(member._roles)}).match({id : user.username + '#' + user.id})
             })})
         })
+    },
+
+    async Modify(args){
+        let {errors} = await supabase.from(args.guild.name).update(args.update).eq(args.eq[0], args.eq[1])
+        return errors
     }
 }

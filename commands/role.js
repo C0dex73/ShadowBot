@@ -1,6 +1,4 @@
-const { ThreadAutoArchiveDuration } = require("discord.js")
 const Discord = require("discord.js")
-const { toString } = require("lodash")
 const commands = require("../config.json").commands
 
 module.exports = {
@@ -23,27 +21,34 @@ module.exports = {
     {
         type : commands.type.bool,
         name : "remove",
-        description : "if true will remove instead of adding",
-        required : true
+        description : "if true will remove instead of giving",
+        required : false
     }],
 
     async run(bot, msg, args){
 
-        if(args.getBoolean('remove')){
-            if(args.getMember('member').roles.cache.some(role => role == args.getRole('role'))){
-                args.getMember('member').roles.remove(args.getRole('role'))
-                msg.reply({content : `Successfuly removed '${args.getRole('role').name}' to '${args.getMember('member').user.username}'`, ephemeral : true})
+        let memberToModify = args.getMember('member')
+        let roleToApply = args.getRole('role')
+        let toRemove = args.getBoolean('remove')
+
+        this.Apply(msg, memberToModify, roleToApply, toRemove)
+    },
+
+    async Apply(msg, memberToModify, roleToApply, toRemove){
+        if(toRemove == true){
+            if(memberToModify.roles.cache.some(role => role == roleToApply)){
+                memberToModify.roles.remove(roleToApply)
+                msg.reply({content : `Successfuly removed '${roleToApply.name}' to '${memberToModify.user.username}'`, ephemeral : true})
             }else{
-                msg.reply({content : `'${args.getMember('member').user.username}' do not have this role !`, ephemeral : true})
+                msg.reply({content : `'${memberToModify.user.username}' do not have this role !`, ephemeral : true})
             }
         }else{
-            if(!args.getMember('member').roles.cache.some(role => role == args.getRole('role'))){
-                args.getMember('member').roles.add(args.getRole('role'))
-                msg.reply({content : `Successfuly gave '${args.getRole('role').name}' to '${args.getMember('member').user.username}'`, ephemeral : true})
+            if(!memberToModify.roles.cache.some(role => role == roleToApply)){
+                memberToModify.roles.add(roleToApply)
+                msg.reply({content : `Successfuly gave '${roleToApply.name}' to '${memberToModify.user.username}'`, ephemeral : true})
             }else{
-                msg.reply({content : `'${args.getMember('member').user.username}' already has this role !`, ephemeral : true})
+                msg.reply({content : `'${memberToModify.user.username}' already has this role !`, ephemeral : true})
             }
         }
-        
-    },
+    }
 }

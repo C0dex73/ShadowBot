@@ -20,7 +20,7 @@ module.exports = {
             isBan : null,
             isExcluded : null,
         }
-        let errors = await DB.Get(args)
+        let [data, errors] = await DB.Get(args)
         msg.reply({content : errors == null ? "This file contain the data asked" : "UhOh, an error as occured. Please contact an admin and show the file below", ephemeral : true, files: [{
             attachment: 'temp.json',
             name: errors == null ? 'data.json' : 'errors.json',
