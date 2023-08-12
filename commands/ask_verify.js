@@ -8,6 +8,7 @@ const { TeamMemberMembershipState } = require("discord.js")
 module.exports = {
     name : "ask_verify",
     description : "Remove acess to the server and send him verif msg",
+    help : "When used by an moderator like so : /ask_verify @username , will remove all roles to the said user and send him a dm asking for him to reply to it with /verify to proves he is humain.",
     permissions : Discord.PermissionFlagsBits.ManageRoles,
     dm : false,
     options:[{

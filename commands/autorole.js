@@ -4,6 +4,7 @@ const ApplyRoleRule = require("./role").Apply
 module.exports = {
     name : "autorole",
     description : "gives you the selected role if authorized",
+    help : "when used by anyone, like so : /autorole @role [optional : True / False (remove)] will add the specified role if remove is False or not specified and remove it otherwise. Works only with the game roles.",
     permission : null,
     dm : false,
     options : [{

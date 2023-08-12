@@ -5,6 +5,7 @@ const commands = require("../config.json").commands
 module.exports = {
     name: "restart",
     description : "stop the bot",
+    help : "",
     permission : Discord.PermissionFlagsBits.Administrator,
     dm : false,
     

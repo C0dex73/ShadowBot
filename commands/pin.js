@@ -5,12 +5,14 @@ const DB = require('../loader/loadDatabase.js')
 module.exports = {
     name : "pin",
     description : "can store up to 20 messages links",
+    help : "when used by anyone like so : /pin [optional https://discord.com/channels/.../.../... (message link)] [optional True/False (remove)], if message link is not specified then shows the pinned list. Otherwise if remove is false or not specified, add the message link to the pin list, or remove it if remove si true. Pin lists are privates and specifics to every users, but administrators can see them as they are collected in the database.",
     permission : null,
     dm : false,
     options : [{
         type : commands.type.string,
         name : "message_link",
         description : "the link to the message to save",
+        choices : null, 
         required : false
     },
     {

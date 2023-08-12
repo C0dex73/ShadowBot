@@ -6,7 +6,8 @@ const fs = require("fs")
 
 module.exports = {
     name: "get_my_data",
-    description : "Return your data in the Database data",
+    description : "Return your data in the Database",
+    help : "When used by anyone, return your data collected in the database",
     permission : null,
     dm : true,
     

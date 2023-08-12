@@ -7,6 +7,7 @@ const fs = require("fs")
 module.exports = {
     name: "get_data",
     description : "Return all the Database data",
+    help : "When used by a moderator, like so : /get_data True / False (public) [optional @role (has_role)] [optional @user (is)] [optional integer (warns)] [optional True/False (is_banned)] [optional True/False (is_excluded)] will return the data from the database correspinding to the query",
     permission : Discord.PermissionFlagsBits.BanMembers,
     dm : false,
     options : [
@@ -32,6 +33,7 @@ module.exports = {
             type : commands.type.int,
             name : "warns",
             description : "if not null, will only return the rows with the selected number of warns",
+            choices : null,
             required : false
         },
         {

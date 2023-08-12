@@ -3,6 +3,7 @@ const Discord = require("discord.js")
 module.exports = {
     name: "ping",
     description : "reply by pong with the delay",
+    help : "when used by anyone, like so : /ping, replies with pong and the bot ws ping",
     permission: null,
     dm: true,
 
