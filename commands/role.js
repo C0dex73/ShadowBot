@@ -38,14 +38,14 @@ module.exports = {
         if(toRemove == true){
             if(memberToModify.roles.cache.some(role => role == roleToApply)){
                 memberToModify.roles.remove(roleToApply)
-                msg.reply({content : `Successfuly removed '${roleToApply.name}' to '${memberToModify.user.username}'`, ephemeral : true})
+                msg.reply({content : `Successfuly removed '${roleToApply.name}' to '${memberToModify.user.username}'`, ephemeral : (msg.member.roles.cache.find(r => r.id === 780472016775020550) == null ? true : false)})
             }else{
                 msg.reply({content : `'${memberToModify.user.username}' do not have this role !`, ephemeral : true})
             }
         }else{
             if(!memberToModify.roles.cache.some(role => role == roleToApply)){
                 memberToModify.roles.add(roleToApply)
-                msg.reply({content : `Successfuly gave '${roleToApply.name}' to '${memberToModify.user.username}'`, ephemeral : true})
+                msg.reply({content : `Successfuly gave '${roleToApply.name}' to '${memberToModify.user.username}'`, ephemeral : (msg.member.roles.cache.find(r => r.id === 780472016775020550) == null ? true : false)})
             }else{
                 msg.reply({content : `'${memberToModify.user.username}' already has this role !`, ephemeral : true})
             }
