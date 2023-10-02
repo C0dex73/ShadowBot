@@ -1,5 +1,5 @@
 {
-    "token" : "MTA2MDUyMzk0NTkwNTg5NzU1Mw.GwbcQp.IkQgmrRsipcfJ9WzBUnJtf1yNbm0q_XGOu1G1g",
+    "token" : "",
     "supabase" : {
         "url" : "https://qalxpfmvsibrhnrhfkbl.supabase.co",
         "APIKey" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFhbHhwZm12c2licmhucmhma2JsIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY2ODI1Mjg0OCwiZXhwIjoxOTgzODI4ODQ4fQ.NJLms57wRwzLWtW1WMeOhb9YjWun41uO6iV0ZfYIuDg"
@@ -20,11 +20,5 @@
                 "file" : "Attachment"
             }
         }
-    },
-    "minecraft" : {
-        "ip" : "001001001byCODEX.aternos.me",
-        "port" : "",
-        "name" : "001001001",
-        "auto-night-skip" : "false"
     }
 }
